@@ -23,12 +23,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Página de inicio
+// DatabasePágina de inicio
 app.get('/', (req, res) => {
   res.render('home');
 });
 
-// ✅ Consultar tabla de usuarios
+// DatabasePágina de inicio
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.get('/info', (req, res) => {
+  res.render('info');
+});
+
+// Consultar tabla de usuarios
 app.get('/db', async (req, res) => {
   try {
     const [rows] = await connection.execute('SELECT * FROM Usuario');
@@ -40,13 +49,13 @@ app.get('/db', async (req, res) => {
 });
 
 
-// ❌ 404
+// 404
 app.use((req, res) => {
   const url = req.originalUrl;
   res.status(404).render('not_found', { url });
 });
 
-// 🚀 Iniciar servidor
+// Iniciar servidor
 async function main() {
   try {
     connection = await mysql.createConnection({

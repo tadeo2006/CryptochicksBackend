@@ -1,37 +1,125 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-  }
-  
-  h1 {
-    margin-bottom: 40px;
-    color: #333;
-  }
-  
-  .button-container {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .btn {
-    padding: 15px 30px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-decoration: none;
-  }
-  
-  .btn:hover {
-    background-color: #0056b3;
-  }
-  
+  background-color: #0d0d0d;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.waybar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f1f2e;
+  padding: 15px 30px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.waybar .logo img {
+  height: 40px;
+}
+
+.waybar nav button {
+  background-color: #ff00c8;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  margin-left: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.waybar nav button:hover {
+  background-color: #cc009e;
+}
+
+.hero {
+  display: flex;
+  flex: 1;
+}
+
+.left-panel {
+  flex: 1;
+  background: linear-gradient(to bottom, #181818, #2a2a2a);
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.left-panel h1 {
+  font-size: 48px;
+  color: #ff00c8;
+}
+
+.left-panel p {
+  font-size: 18px;
+  line-height: 1.5;
+  max-width: 500px;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+button.juega, button.registro {
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+button.juega {
+  background-color: #00ffc8;
+  color: black;
+}
+
+button.juega:hover {
+  transform: scale(1.05);
+}
+
+button.registro {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+}
+
+button.registro:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.right-panel {
+  flex: 1;
+  background-image: url('/images/cryp.jpeg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #1f1f2e;
+  font-size: 14px;
+  color: #aaa;
+}
