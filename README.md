@@ -1,58 +1,70 @@
 # Plataforma de Aprendizaje Blockchain - CryptoChicks
 
-Este proyecto forma parte de una iniciativa educativa en colaboración con CryptoChicks, cuyo objetivo es crear un entorno interactivo para enseñar conceptos de Blockchain a través de un videojuego educativo.
+Este proyecto es parte de una iniciativa educativa en colaboración con CryptoChicks. Consiste en una plataforma gamificada para aprender conceptos de Blockchain a través de un videojuego interactivo desarrollado en Unity y un sistema de gestión web complementario.
 
-El repositorio actual contiene la parte web y las APIs que sirven como backend para una aplicación desarrollada en Unity.
+Este repositorio contiene:
 
-## Descripción General
+1. Funciones Lambda (backend sin servidor) que manejan la lógica de registro, inicio y cierre de sesión.
+2. Una aplicación web de gestión basada en Express.js para supervisar la actividad de usuarios y sesiones.
 
-El sistema está dividido en dos componentes principales:
+## Estructura del Repositorio
 
-- Juego educativo en Unity: interfaz donde los usuarios interactúan con lecciones, responden cuestionarios, y avanzan en su aprendizaje.
-- Backend (este repositorio): proporciona las APIs necesarias para gestionar usuarios, sesiones y cuestionarios, alojadas en AWS Lambda y conectadas a una base de datos MySQL.
+```
+CRYPTOCHICKSWEB/
+├── lambdaApisAWS/          # Funciones Lambda desplegadas en AWS
+│   ├── Logout/
+│   ├── SignUp/
+│   ├── UnityLogin-db/
+│   └── README.md
+├── public/                 # Archivos públicos (CSS, JS, imágenes)
+├── views/                  # Vistas EJS utilizadas por Express
+│   └── home.ejs
+├── app.mjs                 # Servidor Express principal
+├── package.json            # Dependencias del proyecto
+├── package-lock.json
+└── README.md               # Este archivo
+```
 
-## Tecnologías utilizadas
+## Tecnologías Utilizadas
 
-- Unity (Game Engine) - desarrollo del videojuego educativo
-- Node.js (v18.x) - backend en JavaScript moderno
-- Express (en entorno local de pruebas)
-- AWS Lambda - despliegue de funciones serverless
-- MySQL - almacenamiento de usuarios, sesiones y cuestionarios
-- Postman - pruebas y documentación de endpoints
-- Cloud9 (opcional) - entorno de desarrollo en la nube
+- Unity (frontend del videojuego educativo)
+- Node.js + Express (web backend)
+- EJS (plantillas HTML dinámicas)
+- AWS Lambda (backend serverless)
+- MySQL (gestión de datos de usuarios y sesiones)
+- Postman (pruebas de API)
+- Cloud9 o entorno local para desarrollo
 
-## Funciones disponibles en este repositorio
+## Funciones Backend Disponibles
 
 - SignUp: Registro de nuevos usuarios
-- UnityLogin-db: Autenticación de usuario y creación de sesión
-- Logout: Cierre de sesión
-- (En construcción) APIs para cuestionarios, estadísticas y seguimiento
+- UnityLogin-db: Login y control de sesión de usuario
+- Logout: Cierre de sesión con fecha
+- (En desarrollo) APIs para control de cuestionarios, estadísticas, etc.
 
-## Estructura del repositorio
+## ¿Qué hace la página de gestión?
 
-```
-/
-├── SignUp/               # Función Lambda para registrar usuarios
-├── UnityLogin-db/        # Función Lambda para login y gestión de sesiones
-├── Logout/               # Función Lambda para cerrar sesiones
-├── public/               # Sitio web básico en Express (opcional)
-├── README.md             # Este archivo
-└── ...                   # Otros archivos de configuración y pruebas
-```
+La aplicación Express (app.mjs) permite visualizar y administrar:
+- Usuarios registrados
+- Sesiones abiertas y cerradas
+- Estado de las conexiones
+- Integración con el backend Lambda y base de datos
 
-## Cómo probar las APIs
+Las vistas están escritas en EJS y se encuentran en la carpeta views/.
 
-Puedes probar las APIs usando Postman o desde Unity mediante UnityWebRequest. Cada endpoint acepta peticiones POST en formato JSON. Las URLs se generan automáticamente al habilitar URL públicas en AWS Lambda.
+## Uso de las APIs
 
-Ejemplo de estructura de petición:
+Todas las APIs reciben datos vía POST en formato JSON, y están desplegadas en AWS Lambda. Pueden ser invocadas desde Unity (mediante UnityWebRequest) o desde herramientas como Postman.
+
+Ejemplo de estructura:
 
 ```
-POST https://<lambda-url>.lambda-url.us-east-1.on.aws/
+POST https://<tu-api>.lambda-url.us-east-1.on.aws/
 Content-Type: application/json
 ```
 
-## Créditos
+## Autores
 
 Desarrollado por:  
-Proyecto para CryptoChicks con fines educativos  
+Proyecto educativo con CryptoChicks  
 Tecnológico de Monterrey - TC2005B
