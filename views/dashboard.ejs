@@ -1,11 +1,91 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 </head>
 <body>
-  <h1><%= mensaje %></h1>
+  <header class="header">
+    <h1>Dashboard Administrativo</h1>
+  </header>
+
+  <main class="dashboard-container">
+    <!-- Tarjetas de resumen -->
+    <div class="card">
+      <h2>Total Usuarios</h2>
+      <p><%= totalUsuarios %></p>
+    </div>
+    <div class="card">
+      <h2>Total Administradores</h2>
+      <p><%= totalAdmins %></p>
+    </div>
+    <div class="card">
+      <h2>Sesiones Activas Hoy</h2>
+      <p><%= sesionesActivas %></p>
+    </div>
+
+    <!-- Gráficas -->
+    <div class="chart-container">
+      <h2>Usuarios con Más Logros</h2>
+      <div id="logros-chart" class="chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <h2>Monedas Distribuidas por Usuario</h2>
+      <div id="wallet-chart" class="chart"></div>
+    </div>
+
+    <div class="chart-container">
+      <h2>Top 5 Cursos Más Completados</h2>
+      <div id="cursos-chart" class="chart"></div>
+    </div>
+  </main>
+
+  <script>
+    // Gráfica de Usuarios con Más Logros
+    const logrosChart = echarts.init(document.getElementById('logros-chart'));
+    logrosChart.setOption({
+      title: { text: 'Usuarios con Más Logros' },
+      tooltip: {},
+      xAxis: { type: 'category', data: <%= JSON.stringify(usuariosConLogros.map(u => u.nombre)) %> },
+      yAxis: { type: 'value' },
+      series: [{
+        name: 'Logros',
+        type: 'bar',
+        data: <%= JSON.stringify(usuariosConLogros.map(u => u.cantidad)) %>
+      }]
+    });
+
+    // Gráfica de Monedas Distribuidas por Usuario
+    const walletChart = echarts.init(document.getElementById('wallet-chart'));
+    walletChart.setOption({
+      title: { text: 'Monedas Distribuidas por Usuario' },
+      tooltip: {},
+      xAxis: { type: 'category', data: <%= JSON.stringify(monedasDistribuidas.map(w => w.nombre)) %> },
+      yAxis: { type: 'value' },
+      series: [{
+        name: 'Monedas',
+        type: 'bar',
+        data: <%= JSON.stringify(monedasDistribuidas.map(w => w.monedas)) %>
+      }]
+    });
+
+    // Gráfica de Top 5 Cursos Más Completados
+    const cursosChart = echarts.init(document.getElementById('cursos-chart'));
+    cursosChart.setOption({
+      title: { text: 'Top 5 Cursos Más Completados' },
+      tooltip: {},
+      xAxis: { type: 'category', data: <%= JSON.stringify(cursosPopulares.map(c => c.nombre)) %> },
+      yAxis: { type: 'value' },
+      series: [{
+        name: 'Completados',
+        type: 'bar',
+        data: <%= JSON.stringify(cursosPopulares.map(c => c.completados)) %>
+      }]
+    });
+  </script>
 </body>
 </html>

@@ -65,16 +65,32 @@ app.post('/login', async (req, res) => {
 
     const data = await response.json();
 
-    if (response.ok && data.idusuario) {
-      // Guardar datos del usuario en la sesión
-      req.session.user = {
-        idusuario: data.idusuario,
-        email: email,
-        id_sesion: data.id_sesion
-      };
+    if (response.ok) {
+      if (data.es_admin) {
+        // Guardar datos del administrador en la sesión
+        req.session.user = {
+          es_admin: true,
+          email: email
+        };
 
-      // Redirigir al dashboard
-      return res.redirect('/dashboard');
+        // Redirigir al dashboard
+        return res.redirect('/dashboard');
+      } else if (data.idusuario) {
+        // Guardar datos del usuario en la sesión
+        req.session.user = {
+          idusuario: data.idusuario,
+          email: email,
+          id_sesion: data.id_sesion
+        };
+
+        // Redirigir al juego
+        return res.redirect('/game');
+      } else {
+        // Si no es admin ni usuario válido, mostrar error
+        return res.render('login', {
+          error: 'Credenciales incorrectas'
+        });
+      }
     } else {
       // Mostrar mensaje de error en la página de login
       return res.render('login', {
@@ -90,9 +106,39 @@ app.post('/login', async (req, res) => {
 });
 
 // Ruta protegida para el dashboard
-app.get('/dashboard', isAuthenticated, (req, res) => {
-  res.render('dashboard', {
-    mensaje: `Bienvenido al Dashboard, Usuario ID: ${req.session.user.idusuario}`
+app.get('/dashboard', isAuthenticated, async (req, res) => {
+  if (!req.session.user.es_admin) {
+    return res.redirect('/login'); // Redirigir si no es administrador
+  }
+
+  try {
+    // Consumir la API
+    const response = await fetch('https://zskog3nphwscapavdlqybgse6m0wsszn.lambda-url.us-east-1.on.aws/');
+    const data = await response.json();
+
+    // Pasar los datos a la vista
+    res.render('dashboard', {
+      totalUsuarios: data.totalUsuarios,
+      totalAdmins: data.totalAdmins,
+      sesionesActivas: data.sesionesActivas,
+      usuariosConLogros: data.usuariosConLogros,
+      monedasDistribuidas: data.monedasDistribuidas,
+      cursosPopulares: data.cursosPopulares
+    });
+  } catch (err) {
+    console.error('Error al consumir la API del dashboard:', err);
+    res.status(500).send('Error al cargar el dashboard');
+  }
+});
+
+// Ruta protegida para el juego
+app.get('/game', isAuthenticated, (req, res) => {
+  if (req.session.user.es_admin) {
+    return res.redirect('/dashboard'); // Redirigir si es administrador
+  }
+
+  res.render('game', {
+    mensaje: `Bienvenido al Juego, Usuario ID: ${req.session.user.idusuario}`
   });
 });
 

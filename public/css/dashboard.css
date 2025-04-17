@@ -1,0 +1,66 @@
+/* General */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+.header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+/* Tarjetas */
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  flex: 1 1 300px;
+  max-width: 300px;
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #4CAF50;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Gráficas */
+.chart-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1 1 600px;
+  max-width: 600px;
+}
+
+.chart-container h2 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #4CAF50;
+}
+
+.chart {
+  width: 100%;
+  height: 400px;
+}
