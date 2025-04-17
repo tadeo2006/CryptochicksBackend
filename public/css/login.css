@@ -93,16 +93,83 @@ button:hover {
 }
 
 .register-link {
-  text-align: center;
-  margin-top: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .register-link a {
-  color: #00ffc8;
-  text-decoration: none;
-  font-weight: bold;
+    color: #00ffc8;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .register-link a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 30px;
+        max-width: 90%;
+    }
+
+    .auth-tabs button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    form {
+        gap: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"] {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button[type="submit"] {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .error-message {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .auth-tabs button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"] {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    button[type="submit"] {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .error-message {
+        font-size: 10px;
+    }
+
+    .register-link {
+        font-size: 12px;
+    }
 }
