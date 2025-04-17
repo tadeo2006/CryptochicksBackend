@@ -105,6 +105,47 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Ruta para mostrar el formulario de registro
+app.get('/signup', (req, res) => {
+  res.render('signup');
+});
+
+// Ruta para manejar el registro
+app.post('/signup', async (req, res) => {
+  const { first_name, last_name, email, password_hash, fecha_nacimiento } = req.body;
+
+  try {
+    const response = await fetch('https://eplu7fzz3pp5bh5toqxvg6tqxa0bqhtw.lambda-url.us-east-1.on.aws/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        first_name,
+        last_name,
+        email,
+        password_hash,
+        fecha_nacimiento
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // Redirigir al login después de un registro exitoso
+      return res.redirect('/login');
+    } else {
+      // Mostrar mensaje de error en la página de registro
+      return res.render('signup', {
+        error: data.mensaje || 'Error al registrar el usuario'
+      });
+    }
+  } catch (err) {
+    console.error('Error al contactar la API de registro:', err);
+    return res.status(500).render('signup', {
+      error: 'Error al conectar con el servidor de registro'
+    });
+  }
+});
+
 // Ruta protegida para el dashboard
 app.get('/dashboard', isAuthenticated, async (req, res) => {
   if (!req.session.user.es_admin) {
