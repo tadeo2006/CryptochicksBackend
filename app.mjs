@@ -47,6 +47,11 @@ app.get('/', (req, res) => {
   res.render('home');
 });
 
+// Ruta para la página de información
+app.get('/info', (req, res) => {
+  res.render('info'); // Asegúrate de tener un archivo info.ejs en la carpeta views
+});
+
 // Página de login
 app.get('/login', (req, res) => {
   res.render('login');
@@ -194,16 +199,7 @@ app.get('/logout', (req, res) => {
   });
 });
 
-// Consultar tabla de usuarios
-app.get('/db', async (req, res) => {
-  try {
-    const [rows] = await connection.execute('SELECT * FROM Usuario');
-    res.render('db', { rows });
-  } catch (err) {
-    console.error('Error en /db:', err);
-    res.status(500).send('Error al acceder a la base de datos');
-  }
-});
+
 
 // 404
 app.use((req, res) => {
