@@ -1,5 +1,6 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
+import session from 'express-session';
 
 const app = express();
 const PUERTO = 8080;
@@ -14,6 +15,24 @@ app.use(express.static('public'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Configurar sesiones
+app.use(session({
+  secret: 'tu_secreto_seguro', // Cambia esto por una cadena segura
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // Cambia a true si usas HTTPS
+}));
+
+// Middleware para proteger rutas
+function isAuthenticated(req, res, next) {
+  if (req.session.user) {
+    return next(); // El usuario está autenticado, continuar
+  }
+  res.redirect('/login'); // Redirigir al login si no está autenticado
+}
+
+// Configurar CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
@@ -23,18 +42,69 @@ app.use((req, res, next) => {
   next();
 });
 
-// DatabasePágina de inicio
+// Página de inicio
 app.get('/', (req, res) => {
   res.render('home');
 });
 
-// DatabasePágina de inicio
+// Página de login
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.get('/info', (req, res) => {
-  res.render('info');
+// Manejar el login
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const response = await fetch('https://toz3gahzj3xaytjuup7jkipqai0flfgy.lambda-url.us-east-1.on.aws/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.idusuario) {
+      // Guardar datos del usuario en la sesión
+      req.session.user = {
+        idusuario: data.idusuario,
+        email: email,
+        id_sesion: data.id_sesion
+      };
+
+      // Redirigir al dashboard
+      return res.redirect('/dashboard');
+    } else {
+      // Mostrar mensaje de error en la página de login
+      return res.render('login', {
+        error: data.mensaje || 'Credenciales incorrectas'
+      });
+    }
+  } catch (err) {
+    console.error('Error al contactar el login API:', err);
+    return res.status(500).render('login', {
+      error: 'Error al conectar con el servidor de autenticación'
+    });
+  }
+});
+
+// Ruta protegida para el dashboard
+app.get('/dashboard', isAuthenticated, (req, res) => {
+  res.render('dashboard', {
+    mensaje: `Bienvenido al Dashboard, Usuario ID: ${req.session.user.idusuario}`
+  });
+});
+
+// Ruta para cerrar sesión
+app.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error al cerrar sesión:', err);
+      return res.redirect('/dashboard');
+    }
+    res.redirect('/login');
+  });
 });
 
 // Consultar tabla de usuarios
@@ -47,7 +117,6 @@ app.get('/db', async (req, res) => {
     res.status(500).send('Error al acceder a la base de datos');
   }
 });
-
 
 // 404
 app.use((req, res) => {
