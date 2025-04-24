@@ -7,6 +7,17 @@
   <link rel="stylesheet" href="/css/home.css">
 </head>
 <body>
+  <!-- Contenedor para las imágenes animadas -->
+  <div class="animated-background">
+    <img src="/images/BG.png" alt="Fondo 1" class="background-image">
+    <!-- <img src="/images/Foto 2.png" alt="Fondo 2" class="background-image">
+    <img src="/images/Foto 3.png" alt="Fondo 3" class="background-image">
+    <img src="/images/Foto 4.png" alt="Fondo 4" class="background-image">
+    <img src="/images/Foto 5.png" alt="Fondo 5" class="background-image">
+    <img src="/images/Foto 6.png" alt="Fondo 6" class="background-image">
+    <img src="/images/Foto 7.png" alt="Fondo 7" class="background-image"> -->
+  </div>
+
   <header class="waybar">
     <div class="logo">
       <img src="/images/logo.png" alt="CryptoChicks Logo">
@@ -14,21 +25,18 @@
     <nav>
       <button onclick="location.href='/login'">Iniciar Sesión</button>
       <button onclick="location.href='/info'">Sobre el juego</button>
-      <button onclick="location.href='/signup'">Regístrate</button> <!-- Nuevo botón -->
+      <button onclick="location.href='/signup'">Regístrate</button>
     </nav>
   </header>
 
   <main class="hero">
-    <div class="left-panel">
+    <div class="content">
       <h1>CryptoChicks Game</h1>
       <p>Un juego educativo que empodera a las mujeres mediante el aprendizaje de tecnologías como Inteligencia Artificial y Criptomonedas.</p>
       <div class="buttons">
         <button class="juega" onclick="location.href='/play'">¡Juega Ahora!</button>
-        <button class="registro" onclick="location.href='/signup'">Regístrate</button> <!-- Nuevo botón -->
+        <button class="registro" onclick="location.href='/signup'">Regístrate</button>
       </div>
-    </div>
-    <div class="right-panel">
-      <div class="photo-overlay"></div>
     </div>
   </main>
 

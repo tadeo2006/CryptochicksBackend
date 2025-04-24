@@ -164,6 +164,7 @@ app.get('/dashboard', isAuthenticated, async (req, res) => {
 
     // Pasar los datos a la vista
     res.render('dashboard', {
+      adminName: req.session.user.email.split('@')[0], // Usa el email para obtener un nombre básico
       totalUsuarios: data.totalUsuarios,
       totalAdmins: data.totalAdmins,
       sesionesActivas: data.sesionesActivas,

@@ -18,17 +18,19 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1f1f2e;
+  background-color: transparent; /* Fondo completamente transparente */
   padding: 15px 30px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: none; /* Elimina cualquier sombra */
+  border: none; /* Elimina cualquier borde */
 }
 
 .waybar .logo img {
   height: 40px;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5)); /* Sombra sutil para el logo */
 }
 
 .waybar nav button {
-  background-color: #ff00c8;
+  background-color: rgba(255, 255, 255, 0.2); /* Fondo semitransparente para los botones */
   border: none;
   color: white;
   padding: 10px 20px;
@@ -39,38 +41,39 @@ body {
 }
 
 .waybar nav button:hover {
-  background-color: #cc009e;
+  background-color: rgba(255, 255, 255, 0.4); /* Fondo más claro al pasar el cursor */
 }
+
 
 .hero {
   display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Alinea el contenido al lado izquierdo */
   flex: 1;
+  text-align: left; /* Alinea el texto a la izquierda */
+  padding: 20px; /* Espaciado interno */
 }
 
-.left-panel {
-  flex: 1;
-  background: linear-gradient(to bottom, #181818, #2a2a2a);
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
+.content {
+  max-width: 500px; /* Limita el ancho del contenido */
+  margin-left: 10%; /* Ajusta la posición hacia la derecha (10% del ancho de la pantalla) */
 }
 
-.left-panel h1 {
+.content h1 {
   font-size: 48px;
   color: #ff00c8;
+  margin-bottom: 20px;
 }
 
-.left-panel p {
+.content p {
   font-size: 18px;
   line-height: 1.5;
-  max-width: 500px;
+  margin-bottom: 30px;
 }
 
 .buttons {
-  margin-top: 20px;
   display: flex;
+  justify-content: flex-start; /* Alinea los botones al lado izquierdo */
   gap: 15px;
 }
 
@@ -103,20 +106,6 @@ button.registro:hover {
   color: #000000;
 }
 
-.right-panel {
-  flex: 1;
-  background-image: url('/images/cryp.jpeg');
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.photo-overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
 footer {
   text-align: center;
   padding: 20px;
@@ -125,56 +114,103 @@ footer {
   color: #aaa;
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-  }
+/* Contenedor para las imágenes animadas */
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1; /* Envía el fondo detrás del contenido */
+}
 
-  .left-panel {
-    padding: 30px;
-    text-align: center;
-  }
+/* Foto 1: Fondo estático */
+.background-image:nth-child(1) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1; /* Siempre visible */
+  z-index: 1; /* Coloca esta imagen detrás de las demás */
+}
 
-  .right-panel {
-    height: 300px;
-  }
+/* Fotos 2 a 6: Aparecen desde abajo con rebote y permanecen visibles */
+.background-image:nth-child(n+2):nth-child(-n+6) {
+  position: absolute;
+  bottom: -100%; /* Comienza fuera de la pantalla */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0; /* Comienza invisible */
+  z-index: 2; /* Coloca estas imágenes sobre la Foto 1 */
+  animation: slideUpWithBounce 3s ease forwards; /* Animación de subida con rebote */
+}
 
-  .left-panel h1 {
-    font-size: 36px;
-  }
+.background-image:nth-child(2) {
+  animation-delay: 1s;
+}
 
-  .left-panel p {
-    font-size: 16px;
-  }
+.background-image:nth-child(3) {
+  animation-delay: 2s;
+}
 
-  .buttons {
-    flex-direction: column;
-    gap: 10px;
+.background-image:nth-child(4) {
+  animation-delay: 3s;
+}
+
+.background-image:nth-child(5) {
+  animation-delay: 4s;
+}
+
+.background-image:nth-child(6) {
+  animation-delay: 5s;
+}
+
+/* Foto 7: Nubes animadas de izquierda a derecha */
+.background-image:nth-child(7) {
+  position: absolute;
+  top: 0;
+  left: -100%; /* Comienza fuera de la pantalla por la izquierda */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1; /* Siempre visible */
+  z-index: 3; /* Coloca esta imagen sobre todas las demás */
+  animation: moveClouds 40s linear infinite; /* Animación más lenta */
+}
+
+/* Animación para las fotos que suben con rebote */
+@keyframes slideUpWithBounce {
+  0% {
+    bottom: -100%; /* Comienza fuera de la pantalla */
+    opacity: 0;
+  }
+  60% {
+    bottom: 0; /* Llega a su posición final */
+    opacity: 1;
+  }
+  80% {
+    bottom: 10px; /* Rebote hacia arriba */
+  }
+  100% {
+    bottom: 0; /* Regresa a su posición final */
+    opacity: 1; /* Permanece visible */
   }
 }
 
-@media (max-width: 480px) {
-  .waybar {
-    flex-direction: column;
-    align-items: flex-start;
+/* Animación para las nubes */
+@keyframes moveClouds {
+  0% {
+    left: -100%; /* Comienza fuera de la pantalla por la izquierda */
   }
-
-  .waybar nav button {
-    margin-left: 0;
-    margin-top: 10px;
+  50% {
+    left: 0%; /* Entra completamente en la pantalla */
   }
-
-  .left-panel h1 {
-    font-size: 28px;
-  }
-
-  .left-panel p {
-    font-size: 14px;
-  }
-
-  .buttons button {
-    font-size: 14px;
-    padding: 10px 20px;
+  100% {
+    left: 100%; /* Sale completamente por la derecha */
   }
 }
