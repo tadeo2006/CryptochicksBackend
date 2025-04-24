@@ -49,24 +49,13 @@ Las vistas están escritas en EJS y se encuentran en la carpeta `views/`.
 
 ## Instalación
 
-1. Clona este repositorio:
+Clona este repositorio:
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/tadeo2006/CryptochicksBackend.git
    cd cryptoChicksWEB
    ```
 
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
 
-3. Configura las variables de entorno:
-   Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
-   ```
-   MYSQL_HOST=<tu_host_mysql>
-   MYSQL_USER=<tu_usuario_mysql>
-   MYSQL_PASSWORD=<tu_contraseña_mysql>
-   ```
 
 ## Ejecución
 
