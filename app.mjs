@@ -158,9 +158,25 @@ app.get('/dashboard', isAuthenticated, async (req, res) => {
   }
 
   try {
-    // Consumir la API
+    // Consumir la API para obtener los datos del dashboard
     const response = await fetch('https://zskog3nphwscapavdlqybgse6m0wsszn.lambda-url.us-east-1.on.aws/');
     const data = await response.json();
+
+    // Preparar datos para las gráficas
+    const logrosChartData = {
+      labels: data.usuariosConLogros.map(u => u.nombre),
+      values: data.usuariosConLogros.map(u => u.cantidad)
+    };
+
+    const walletChartData = {
+      labels: data.monedasDistribuidas.map(w => w.nombre),
+      values: data.monedasDistribuidas.map(w => w.monedas)
+    };
+
+    const cursosChartData = {
+      labels: data.cursosPopulares.map(c => c.nombre),
+      values: data.cursosPopulares.map(c => c.completados)
+    };
 
     // Pasar los datos a la vista
     res.render('dashboard', {
@@ -168,9 +184,9 @@ app.get('/dashboard', isAuthenticated, async (req, res) => {
       totalUsuarios: data.totalUsuarios,
       totalAdmins: data.totalAdmins,
       sesionesActivas: data.sesionesActivas,
-      usuariosConLogros: data.usuariosConLogros,
-      monedasDistribuidas: data.monedasDistribuidas,
-      cursosPopulares: data.cursosPopulares
+      logrosChartData,
+      walletChartData,
+      cursosChartData
     });
   } catch (err) {
     console.error('Error al consumir la API del dashboard:', err);

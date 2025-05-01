@@ -54,51 +54,13 @@
     <p>&copy; 2025 CryptoChicks Dashboard</p>
   </footer>
 
+  <!-- Variables de datos para las gráficas -->
   <script>
-    // Gráfica de Usuarios con Más Logros
-    const logrosChart = echarts.init(document.getElementById('logros-chart'));
-    logrosChart.setOption({
-      title: { text: 'Usuarios con Más Logros', textStyle: { color: '#fff' } },
-      tooltip: {},
-      xAxis: { type: 'category', data: <%= JSON.stringify(usuariosConLogros.map(u => u.nombre)) %>, axisLabel: { color: '#fff' } },
-      yAxis: { type: 'value', axisLabel: { color: '#fff' } },
-      series: [{
-        name: 'Logros',
-        type: 'bar',
-        data: <%= JSON.stringify(usuariosConLogros.map(u => u.cantidad)) %>,
-        itemStyle: { color: '#00ffc8' }
-      }]
-    });
-
-    // Gráfica de Monedas Distribuidas por Usuario
-    const walletChart = echarts.init(document.getElementById('wallet-chart'));
-    walletChart.setOption({
-      title: { text: 'Monedas Distribuidas por Usuario', textStyle: { color: '#fff' } },
-      tooltip: {},
-      xAxis: { type: 'category', data: <%= JSON.stringify(monedasDistribuidas.map(w => w.nombre)) %>, axisLabel: { color: '#fff' } },
-      yAxis: { type: 'value', axisLabel: { color: '#fff' } },
-      series: [{
-        name: 'Monedas',
-        type: 'bar',
-        data: <%= JSON.stringify(monedasDistribuidas.map(w => w.monedas)) %>,
-        itemStyle: { color: '#ff00c8' }
-      }]
-    });
-
-    // Gráfica de Top 5 Cursos Más Completados
-    const cursosChart = echarts.init(document.getElementById('cursos-chart'));
-    cursosChart.setOption({
-      title: { text: 'Top 5 Cursos Más Completados', textStyle: { color: '#fff' } },
-      tooltip: {},
-      xAxis: { type: 'category', data: <%= JSON.stringify(cursosPopulares.map(c => c.nombre)) %>, axisLabel: { color: '#fff' } },
-      yAxis: { type: 'value', axisLabel: { color: '#fff' } },
-      series: [{
-        name: 'Completados',
-        type: 'bar',
-        data: <%= JSON.stringify(cursosPopulares.map(c => c.completados)) %>,
-        itemStyle: { color: '#ffa500' }
-      }]
-    });
+    const logrosChartData = <%- JSON.stringify(logrosChartData) %>;
+    const walletChartData = <%- JSON.stringify(walletChartData) %>;
+    const cursosChartData = <%- JSON.stringify(cursosChartData) %>;
   </script>
+  <!-- Script externo para renderizar gráficas -->
+  <script src="/js/dashboardCharts.js"></script>
 </body>
 </html>
