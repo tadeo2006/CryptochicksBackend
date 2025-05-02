@@ -1,3 +1,5 @@
+// dashboardCharts.mjs
+
 document.addEventListener('DOMContentLoaded', () => {
   // MONEDAS DISTRIBUIDAS
   if (walletChartData.labels.length > 0) {
@@ -58,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // PREGUNTAS MÁS FALLADAS POR CURSO - Dinámico
+  // PREGUNTAS MÁS FALLADAS POR CURSO - DINÁMICO
   const courseSelect = document.getElementById('course-select');
   const questionsContainer = document.getElementById('questions-container');
 
@@ -76,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     curso.lecciones.forEach(leccion => {
-      // Crear un div contenedor por lección
       const leccionDiv = document.createElement('div');
       leccionDiv.classList.add('leccion-table');
 
@@ -111,24 +112,25 @@ document.addEventListener('DOMContentLoaded', () => {
     mostrarPreguntasPorCurso(selectedCourse);
   });
 
+  // USUARIOS - TABLA Y BUSCADOR
   function mostrarTablaUsuarios(filtro = '') {
     const tbody = document.querySelector('#usuarios-table tbody');
     if (!tbody) return;
-  
+
     const filtroMin = filtro.toLowerCase();
     tbody.innerHTML = '';
-  
+
     usuarios.forEach(u => {
       const nombreCompleto = `${u.first_name} ${u.last_name}`.toLowerCase();
       const correo = u.email.toLowerCase();
-  
+
       if (
         nombreCompleto.includes(filtroMin) ||
         correo.includes(filtroMin)
       ) {
-
         const fechaNac = new Date(u.fecha_nacimiento).toLocaleDateString('en-US');
-  
+;
+
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${u.id_usuario}</td>
@@ -141,20 +143,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-  
 
-  // Mostrar todos al inicio
-mostrarTablaUsuarios();
+  mostrarTablaUsuarios();
 
-// Filtro en tiempo real
-const inputBuscar = document.getElementById('buscar-usuario');
-if (inputBuscar) {
-  inputBuscar.addEventListener('input', () => {
-    mostrarTablaUsuarios(inputBuscar.value);
-  });
-}
-
-  
+  const inputBuscar = document.getElementById('buscar-usuario');
+  if (inputBuscar) {
+    inputBuscar.addEventListener('input', () => {
+      mostrarTablaUsuarios(inputBuscar.value);
+    });
+  }
 
   // Manejo de navegación en el sidebar
   const sidebarLinks = document.querySelectorAll('.sidebar a');
