@@ -5,6 +5,7 @@ body.dark-theme {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .header {
@@ -34,23 +35,21 @@ body.dark-theme {
   border: 2px solid #ffffff;
 }
 
-/* Layout principal */
 .dashboard-layout {
   display: flex;
 }
 
-/* Barra lateral */
 .sidebar {
-  width: 80px; /* Cambiar el ancho a un valor más delgado */
+  width: 80px;
   background-color: #1f1f2e;
-  padding: 20px 10px; /* Reducir el padding horizontal */
+  padding: 20px 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centrar los elementos horizontalmente */
+  align-items: center;
 }
 
 .sidebar .logo {
@@ -64,11 +63,11 @@ body.dark-theme {
   list-style: none;
   padding: 0;
   margin: 0;
-  width: 100%; /* Asegurar que los enlaces ocupen todo el ancho */
+  width: 100%;
 }
 
 .sidebar ul li {
-  margin-bottom: 15px; /* Espacio entre enlaces */
+  margin-bottom: 15px;
 }
 
 .sidebar ul li a {
@@ -76,7 +75,7 @@ body.dark-theme {
   color: #ffffff;
   font-size: 18px;
   display: flex;
-  justify-content: center; /* Centrar los íconos */
+  justify-content: center;
   align-items: center;
   padding: 10px;
   border-radius: 5px;
@@ -88,16 +87,26 @@ body.dark-theme {
   color: #121212;
 }
 
-/* Contenido principal */
 .dashboard-container {
   flex: 1;
   padding: 20px;
-  gap: 20px; /* Espacio entre elementos del contenido principal */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.main-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .topbar {
   display: flex;
-  justify-content: space-between; /* Mantener espacio entre elementos si hay más contenido */
+  justify-content: space-between;
   align-items: center;
   background-color: #1f1f2e;
   padding: 12px 20px;
@@ -120,15 +129,15 @@ body.dark-theme {
 
 .topbar .topbar-actions {
   display: flex;
-  justify-content: flex-end; /* Alinear al lado derecho */
+  justify-content: flex-end;
   align-items: center;
-  gap: 15px; /* Espacio entre los elementos */
+  gap: 15px;
 }
 
 .summary-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Espacio entre tarjetas */
+  gap: 20px;
   margin-bottom: 40px;
 }
 
@@ -140,7 +149,7 @@ body.dark-theme {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
   min-width: 250px;
-  margin-bottom: 20px; /* Espacio entre tarjetas */
+  margin-bottom: 20px;
 }
 
 .card h2 {
@@ -157,7 +166,7 @@ body.dark-theme {
 .charts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px; /* Espacio entre gráficas */
+  gap: 75px;
   justify-content: center;
 }
 
@@ -170,23 +179,14 @@ body.dark-theme {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; /* Espacio entre gráficas */
-}
-
-.chart-container h2 {
-  font-size: 18px;
-  color: #ffffff;
-  margin-bottom: 20px;
-  text-align: center;
+  width: 100%;
+  height: auto;
 }
 
 .chart {
   width: 100%;
-  max-width: 600px; /* Limitar el ancho máximo */
-  height: 300px; /* Altura fija para las gráficas */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  max-width: 100%;
+  height: 300px;
 }
 
 .footer {
@@ -197,54 +197,31 @@ body.dark-theme {
   font-size: 14px;
 }
 
-/* Separación entre secciones */
 section {
-  margin-bottom: 40px; /* Espacio entre secciones */
+  margin-bottom: 40px;
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-  .summary-cards {
-    flex-direction: column;
-  }
-
-  .card {
-    min-width: 100%;
-  }
-
-  .charts {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-layout {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-
-  .dashboard-container {
-    padding: 10px;
-  }
-}
-
-.questions-table {
+.questions-table,
+#usuarios-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
   color: white;
 }
+
 .questions-table th,
-.questions-table td {
+.questions-table td,
+#usuarios-table th,
+#usuarios-table td {
   border: 1px solid #555;
   padding: 8px;
   text-align: left;
 }
-.questions-table th {
+
+.questions-table th,
+#usuarios-table th {
   background-color: #222;
+  color: #fff;
 }
 
 .leccion-table {
@@ -256,82 +233,73 @@ section {
   color: #00ffc8;
 }
 
-/* Asegurar que la sección de usuarios ocupe todo el ancho disponible */
 .usuarios-section {
-  width: 100%; /* Ocupa todo el ancho */
+  width: 100%;
   margin-top: 20px;
 }
 
 .usuarios-section .card {
-  max-width: 100%; /* Asegurar que las tarjetas no se desborden */
-  overflow-x: auto; /* Agregar scroll horizontal si es necesario */
-}
-
-#usuarios-table {
-  width: 100%; /* Asegurar que la tabla ocupe todo el ancho */
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-#usuarios-table th,
-#usuarios-table td {
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #555;
-}
-
-#usuarios-table th {
-  background-color: #222;
-  color: #fff;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 #buscar-usuario {
-  width: 100%; /* Asegurar que el input ocupe todo el ancho */
+  width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 5px;
   border: 1px solid #ccc;
   background-color: #1f1f2e;
   color: #fff;
+  box-sizing: border-box;
 }
 
-/* Responsividad general */
+/* Responsive rules */
 @media (max-width: 768px) {
   .dashboard-layout {
-    flex-direction: column; /* Cambiar el diseño a una columna */
+    flex-direction: column;
   }
-
   .sidebar {
-    width: 100%; /* Hacer que la barra lateral ocupe todo el ancho */
+    width: 100%;
     height: auto;
     position: relative;
   }
-
   .dashboard-container {
     padding: 10px;
   }
-
   .summary-cards {
-    flex-direction: column; /* Cambiar las tarjetas a una columna */
+    flex-direction: column;
   }
-
   .card {
-    min-width: 100%; /* Asegurar que las tarjetas ocupen todo el ancho */
+    min-width: 100%;
   }
-
   .charts {
-    grid-template-columns: 1fr; /* Mostrar una gráfica por fila */
+    grid-template-columns: 1fr;
   }
-
-  .chart-container {
-    margin-bottom: 20px;
+  .chart {
+    height: 250px;
   }
-
   #usuarios-table {
-    font-size: 12px; /* Reducir el tamaño de fuente en pantallas pequeñas */
+    font-size: 12px;
   }
-
   #buscar-usuario {
-    font-size: 14px; /* Ajustar el tamaño del input */
+    font-size: 14px;
+  }
+  .menu-toggle {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar input[type="text"],
+  #buscar-usuario {
+    font-size: 14px;
+    width: 100%;
+  }
+  .header h1 {
+    font-size: 18px;
+  }
+  .card p {
+    font-size: 20px;
   }
 }

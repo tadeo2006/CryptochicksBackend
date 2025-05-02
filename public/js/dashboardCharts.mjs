@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (walletChartData.labels.length > 0) {
     const walletChart = echarts.init(document.getElementById('wallet-chart'));
     walletChart.setOption({
-      title: { text: '', textStyle: { color: '#fff' } },
+      title: { text: 'Monedas Distribuidas por Usuario', textStyle: { color: '#fff' } },
       tooltip: {},
       xAxis: {
         type: 'category',
@@ -23,13 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
         itemStyle: { color: '#ff00c8' }
       }]
     });
+
+    // Habilitar redimensionamiento
+    window.addEventListener('resize', () => {
+      walletChart.resize();
+    });
   }
 
   // PROMEDIO POR LECCIÓN
   if (typeof promedioLeccionData !== 'undefined' && promedioLeccionData.length > 0) {
     const leccionChart = echarts.init(document.getElementById('promedios-leccion-chart'));
     leccionChart.setOption({
-      title: { text: '', textStyle: { color: '#fff' } },
+      title: { text: 'Promedio de Puntaje por Lección', textStyle: { color: '#fff' } },
       tooltip: {},
       xAxis: {
         type: 'category',
@@ -47,18 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
         itemStyle: { color: '#00ffc8' }
       }]
     });
+
+    // Habilitar redimensionamiento
+    window.addEventListener('resize', () => {
+      leccionChart.resize();
+    });
   }
 
-  // DESPLAZAMIENTO SUAVE PARA LA BARRA LATERAL
-  document.querySelectorAll('.sidebar a').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
+  // Eliminado el bloque duplicado que causaba conflicto con navegación por data-target
+  
 
   // PREGUNTAS MÁS FALLADAS POR CURSO - DINÁMICO
   const courseSelect = document.getElementById('course-select');
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const curso = cursosConErrores.find(c => c.id_curso === parseInt(cursoId));
     if (!curso || !curso.lecciones.length) {
-      questionsContainer.innerHTML = '<p>No hay preguntas registradas para este curso.</p>';
+      questionsContainer.innerHTML = '<p>Selecciona un Curso</p>';
       return;
     }
 
@@ -161,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
 
-      // Obtener el target de la sección a mostrar
+      // Obtener el valor de data-target
       const targetId = link.getAttribute('data-target');
 
       // Ocultar todas las secciones

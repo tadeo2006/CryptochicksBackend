@@ -5,7 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard</title>
   <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="icon" type="image/png" href="/images/favicon.ico">
   <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+  <style>
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .sidebar.show { display: flex; }
+      .menu-toggle {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topbar input[type="text"],
+      #buscar-usuario {
+        font-size: 14px;
+        width: 100%;
+      }
+      .header h1 { font-size: 18px; }
+      .card p { font-size: 20px; }
+    }
+  </style>
 </head>
 <body class="dark-theme">
   <div class="dashboard-layout">
@@ -15,7 +39,6 @@
       <ul>
         <li><a href="#" data-target="dashboard-section">📊</a></li>
         <li><a href="#" data-target="profile-section">👤</a></li>
-        <li><a href="#" data-target="settings-section">⚙️</a></li>
       </ul>
     </aside>
 
@@ -23,6 +46,7 @@
     <main class="dashboard-container">
       <!-- Topbar -->
       <header class="topbar">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
         <div class="topbar-actions">
           <div class="user-info">
             <span><%= adminName %></span>
@@ -31,10 +55,10 @@
         </div>
       </header>
 
-      <!-- Sección del Dashboard -->
+      <!-- Sección Dashboard -->
       <section id="dashboard-section" class="main-section">
         <!-- Gráficas -->
-        <section class="charts">
+        <div class="charts">
           <div class="chart-container">
             <h2>Monedas Distribuidas por Usuario</h2>
             <div id="wallet-chart" class="chart"></div>
@@ -43,113 +67,66 @@
             <h2>Promedio de Puntaje por Lección</h2>
             <div id="promedios-leccion-chart" class="chart"></div>
           </div>
-        </section>
+        </div>
 
-        <!-- Preguntas Más Falladas por Curso -->
-        <section class="questions-section">
+        <!-- Preguntas Más Falladas -->
+        <div class="questions-section">
           <div class="card">
             <h2>Preguntas Más Falladas</h2>
             <label for="course-select">Selecciona un Curso:</label>
             <select id="course-select">
+              <option value="0">Selecciona un curso</option>
               <option value="1">Curso 1</option>
               <option value="2">Curso 2</option>
               <option value="3">Curso 3</option>
             </select>
-
             <div id="questions-container">
-              <!-- Contenedores para las tablas de cada lección -->
-              <div id="leccion-1" class="leccion-table">
-                <h3>Lección 1</h3>
-                <table class="questions-table">
-                  <thead>
-                    <tr>
-                      <th>Pregunta</th>
-                      <th>Errores</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
-              <div id="leccion-2" class="leccion-table">
-                <h3>Lección 2</h3>
-                <table class="questions-table">
-                  <thead>
-                    <tr>
-                      <th>Pregunta</th>
-                      <th>Errores</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
+              <!-- Aquí se mostrarán las preguntas dinámicamente -->
             </div>
           </div>
-        </section>
+        </div>
       </section>
 
-      <!-- Sección de Perfil -->
+      <!-- Sección Perfil -->
       <section id="profile-section" class="main-section" style="display: none;">
         <h2>Usuarios</h2>
-                <!-- Summary Cards -->
-        <section class="summary-cards">
+
+        <div class="summary-cards">
           <div class="card">
             <h2>Total Usuarios</h2>
             <p><%= totalUsuarios %></p>
           </div>
-  
           <div class="card">
             <h2>Sesiones Activas Hoy</h2>
             <p><%= sesionesActivas %></p>
           </div>
-  
-        <!-- Lista de Usuarios -->
-        <section class="usuarios-section" >
+        </div>
+
+        <div class="usuarios-section">
           <div class="card">
             <h2>Lista de Usuarios</h2>
-  
-            <input
-              type="text"
-              id="buscar-usuario"
-              placeholder="Buscar por nombre o email..."
-              style="width: 100%; padding: 8px; margin-bottom: 12px; border-radius: 5px; border: 1px solid #ccc;"
-            />   
-            
+            <input type="text" id="buscar-usuario" placeholder="Buscar por nombre o email..." />
             <table id="usuarios-table" class="questions-table">
               <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Fecha Nacimiento</th>
-
-                </tr>
+                <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Fecha Nacimiento</th></tr>
               </thead>
-              <tbody>
-                <!-- Se llena con JavaScript -->
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
-          
-        </section>
-  
-
-  
-          
-         
-      </section>
-
-      <!-- Sección de Configuración -->
-      
+        </div>
       </section>
     </main>
   </div>
 
-  <!-- Variables para el JS -->
   <script>
     const walletChartData = <%- JSON.stringify(walletChartData) %>;
     const promedioLeccionData = <%- JSON.stringify(promedioLeccionData) %>;
     const cursosConErrores = <%- JSON.stringify(cursosConErrores) %>;
     const usuarios = <%- JSON.stringify(usuarios) %>;
+
+    function toggleSidebar() {
+      document.querySelector('.sidebar').classList.toggle('show');
+    }
   </script>
 
   <script src="/js/dashboardCharts.mjs" type="module"></script>
