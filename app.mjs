@@ -75,7 +75,8 @@ app.post('/login', async (req, res) => {
         // Guardar datos del administrador en la sesión
         req.session.user = {
           es_admin: true,
-          email: email
+          email: email,
+          first_name: data.first_name // Guardar el nombre del administrador
         };
 
         // Redirigir al dashboard
@@ -162,48 +163,44 @@ app.get('/dashboard', isAuthenticated, async (req, res) => {
     const response = await fetch('https://zskog3nphwscapavdlqybgse6m0wsszn.lambda-url.us-east-1.on.aws/');
     const data = await response.json();
 
-    // Preparar datos para las gráficas
-    const logrosChartData = {
-      labels: data.usuariosConLogros.map(u => u.nombre),
-      values: data.usuariosConLogros.map(u => u.cantidad)
-    };
-
+    // Preparar datos para la gráfica de monedas
     const walletChartData = {
       labels: data.monedasDistribuidas.map(w => w.nombre),
       values: data.monedasDistribuidas.map(w => w.monedas)
     };
 
-    const cursosChartData = {
-      labels: data.cursosPopulares.map(c => c.nombre),
-      values: data.cursosPopulares.map(c => c.completados)
-    };
+    // Preparar datos para la gráfica o tabla de promedios por lección
+    const promedioLeccionData = data.promediosLeccion.map(p => ({
+      leccion: `Lección ${p.id_leccion}`,
+      promedio: parseFloat(p.promedio)
+    }));
 
-    // Pasar los datos a la vista
+
+    // Estructura de cursos, lecciones y preguntas con errores
+    const cursosConErrores = data.cursosConErrores || [];
+
+    const usuarios = data.usuarios || [];
+
+
+    // Renderizar la vista con todos los datos
     res.render('dashboard', {
-      adminName: req.session.user.email.split('@')[0], // Usa el email para obtener un nombre básico
+      adminName: req.session.user.first_name, // Asegúrate de que esta línea esté configurada
       totalUsuarios: data.totalUsuarios,
       totalAdmins: data.totalAdmins,
       sesionesActivas: data.sesionesActivas,
-      logrosChartData,
       walletChartData,
-      cursosChartData
+      promedioLeccionData,    
+      cursosConErrores,
+      usuarios
+
     });
   } catch (err) {
     console.error('Error al consumir la API del dashboard:', err);
-    res.status(500).send('Error al cargar el dashboard');
+    res.status(500).send('Error al cargar el dashboard',err);
   }
 });
 
-// Ruta protegida para el juego
-app.get('/game', isAuthenticated, (req, res) => {
-  if (req.session.user.es_admin) {
-    return res.redirect('/dashboard'); // Redirigir si es administrador
-  }
 
-  res.render('game', {
-    mensaje: `Bienvenido al Juego, Usuario ID: ${req.session.user.idusuario}`
-  });
-});
 
 // Ruta para cerrar sesión
 app.get('/logout', (req, res) => {

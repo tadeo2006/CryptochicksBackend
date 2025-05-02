@@ -17,51 +17,151 @@
     </div>
   </header>
 
-  <main class="dashboard-container">
-    <!-- Tarjetas de resumen -->
-    <section class="summary-cards">
-      <div class="card">
-        <h2>Total Usuarios</h2>
-        <p><%= totalUsuarios %></p>
-      </div>
-      <div class="card">
-        <h2>Total Administradores</h2>
-        <p><%= totalAdmins %></p>
-      </div>
-      <div class="card">
-        <h2>Sesiones Activas Hoy</h2>
-        <p><%= sesionesActivas %></p>
-      </div>
-    </section>
+        <!-- Sección del Dashboard -->
+        <section id="dashboard-section" class="main-section">
+          <!-- Gráficas -->
+          <section class="charts">
+            <div class="chart-container">
+              <h2>Monedas Distribuidas por Usuario</h2>
+              <div id="wallet-chart" class="chart"></div>
+            </div>
+            <div class="chart-container">
+              <h2>Promedio de Puntaje por Lección</h2>
+              <div id="promedios-leccion-chart" class="chart"></div>
+            </div>
+          </section>
 
-    <!-- Gráficas -->
-    <section class="charts">
-      <div class="chart-container">
-        <h2>Usuarios con Más Logros</h2>
-        <div id="logros-chart" class="chart"></div>
-      </div>
-      <div class="chart-container">
-        <h2>Monedas Distribuidas por Usuario</h2>
-        <div id="wallet-chart" class="chart"></div>
-      </div>
-      <div class="chart-container">
-        <h2>Top 5 Cursos Más Completados</h2>
-        <div id="cursos-chart" class="chart"></div>
-      </div>
-    </section>
-  </main>
+          <!-- Preguntas Más Falladas por Curso -->
+          <section class="questions-section">
+            <div class="card">
+              <h2>Preguntas Más Falladas</h2>
+              <label for="course-select">Selecciona un Curso:</label>
+              <select id="course-select">
+                <option value="1">Curso 1</option>
+                <option value="2">Curso 2</option>
+                <option value="3">Curso 3</option>
+              </select>
 
-  <footer class="footer">
-    <p>&copy; 2025 CryptoChicks Dashboard</p>
-  </footer>
+              <div id="questions-container">
+                <!-- Contenedores para las tablas de cada lección -->
+                <div id="leccion-1" class="leccion-table">
+                  <h3>Lección 1</h3>
+                  <table class="questions-table">
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th>Errores</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <div id="leccion-2" class="leccion-table">
+                  <h3>Lección 2</h3>
+                  <table class="questions-table">
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th>Errores</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <div id="leccion-3" class="leccion-table">
+                  <h3>Lección 3</h3>
+                  <table class="questions-table">
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th>Errores</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+                <div id="leccion-4" class="leccion-table">
+                  <h3>Lección 4</h3>
+                  <table class="questions-table">
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th>Errores</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
 
-  <!-- Variables de datos para las gráficas -->
-  <script>
-    const logrosChartData = <%- JSON.stringify(logrosChartData) %>;
-    const walletChartData = <%- JSON.stringify(walletChartData) %>;
-    const cursosChartData = <%- JSON.stringify(cursosChartData) %>;
-  </script>
-  <!-- Script externo para renderizar gráficas -->
-  <script src="/js/dashboardCharts.js"></script>
-</body>
+        <!-- Sección de Perfil -->
+        <section id="profile-section" class="main-section" style="display: none;">
+          <h2>Usuarios</h2>
+
+          <div class="summary-cards">
+          <div class="card">
+            <h2>Total Usuarios</h2>
+            <p><%= totalUsuarios %></p>
+          </div>
+
+          <div class="card">
+            <h2>Sesiones Activas Hoy</h2>
+            <p><%= sesionesActivas %></p>
+          </div>
+        </div>
+
+        <section class="usuarios-section">
+          <div class="card">
+            <h2>Lista de Usuarios</h2>
+        
+            <!-- Barra de búsqueda -->
+            <input
+              type="text"
+              id="buscar-usuario"
+              placeholder="Buscar por nombre o email..."
+              style="width: 100%; padding: 8px; margin-bottom: 12px; border-radius: 5px; border: 1px solid #ccc;"
+            />
+        
+            <table id="usuarios-table" class="questions-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Fecha Nacimiento</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+        
+        
+          </section>
+        </div>
+      </div>
+
+        <!-- Sección de Configuración -->
+        <section id="settings-section" class="main-section" style="display: none;">
+          <h2>Configuración</h2>
+          <p>Aquí puedes ajustar las configuraciones de tu cuenta.</p>
+        </section>
+
+
+      </main>
+    </div>
+
+    <!-- Variables para el JS -->
+    <script>
+      const walletChartData = <%- JSON.stringify(walletChartData) %>;
+      const promedioLeccionData = <%- JSON.stringify(promedioLeccionData) %>;
+      const cursosConErrores = <%- JSON.stringify(cursosConErrores) %>;
+      const usuarios = <%- JSON.stringify(usuarios) %>;
+    </script>
+
+    <script src="/js/dashboardCharts.mjs" type="module"></script>
+  </body>
 </html>
