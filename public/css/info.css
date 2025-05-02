@@ -72,9 +72,13 @@ body {
 }
 
 .feature img {
-  width: 60px;
-  margin-bottom: 15px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0px;
 }
+
 
 .feature h2 {
   color: #00ffc8;
