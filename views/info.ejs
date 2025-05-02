@@ -8,13 +8,31 @@
   <link rel="icon" type="image/png" href="/images/favicon.ico" >
 </head>
 <body>
-  <header class="topbar">
+  <!--<header class="topbar">-->
+  <!--  <div class="logo">-->
+  <!--    <img src="/images/logo.png" alt="Logo CryptoChicks">-->
+  <!--  </div>-->
+  <!--  <nav>-->
+  <!--    <button onclick="location.href='/'">Inicio</button>-->
+  <!--    <button onclick="location.href='/login'">Iniciar Sesión</button>-->
+  <!--  </nav>-->
+  <!--</header>-->
+  <div class="animated-background">
+    <img src="/images/BG.png" alt="Fondo 1" class="background-image">
+  </div>
+
+
+  <header class="waybar">
     <div class="logo">
-      <img src="/images/logo.png" alt="Logo CryptoChicks">
+      <img src="/images/logo.png" alt="CryptoChicks Logo">
     </div>
-    <nav>
-      <button onclick="location.href='/'">Inicio</button>
-      <button onclick="location.href='/login'">Iniciar Sesión</button>
+    <nav class="navbar">
+      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+      <div class="nav-buttons" id="nav-buttons">
+        <button onclick="location.href='/'">Inicio</button>
+        <button onclick="location.href='/login'">Iniciar Sesión</button>
+        <button onclick="location.href='/signup'">Regístrate</button>
+      </div>
     </nav>
   </header>
 
@@ -53,5 +71,21 @@
     <p>&copy; 2025 CryptoChicks - Aprendiendo jugando con tecnología</p>
     <p>Esta aplicación fue desarrollada por alumnos del Tec de Monterrey como colaboración con CryptoChicks.</p>
   </footer>
+
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('nav-buttons');
+
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('show');
+    });
+
+    // Opcional: cerrar al hacer clic en un botón
+    document.querySelectorAll('#nav-buttons button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        nav.classList.remove('show');
+      });
+    });
+  </script>
 </body>
 </html>
