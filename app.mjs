@@ -1,11 +1,26 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
 import session from 'express-session';
+import compression from 'compression';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PUERTO = 8080;
 
 let connection;
+
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/play', express.static(path.join(__dirname, 'Web')));
+app.use(compression());
+app.get('/play', (req, res) => {
+  res.sendFile(path.join(__dirname, 'Web', 'index.html'));
+});
+
+
 
 // Configurar EJS y carpeta de vistas (usa 'views/' por defecto)
 app.set('view engine', 'ejs');
@@ -90,7 +105,7 @@ app.post('/login', async (req, res) => {
         };
 
         // Redirigir al juego
-        return res.redirect('/game');
+        return res.redirect('/play');
       } else {
         // Si no es admin ni usuario válido, mostrar error
         return res.render('login', {
@@ -189,7 +204,7 @@ app.get('/dashboard', isAuthenticated, async (req, res) => {
       totalAdmins: data.totalAdmins,
       sesionesActivas: data.sesionesActivas,
       walletChartData,
-      promedioLeccionData,    
+      promedioLeccionData,
       cursosConErrores,
       usuarios
 

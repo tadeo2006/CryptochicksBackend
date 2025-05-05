@@ -1,11 +1,9 @@
-// dashboardCharts.mjs
-
 document.addEventListener('DOMContentLoaded', () => {
-  // MONEDAS DISTRIBUIDAS
+  // COINS DISTRIBUTED
   if (walletChartData.labels.length > 0) {
     const walletChart = echarts.init(document.getElementById('wallet-chart'));
     walletChart.setOption({
-      title: { text: 'Monedas Distribuidas por Usuario', textStyle: { color: '#fff' } },
+      title: { text: 'Coins Distributed per User', textStyle: { color: '#fff' } },
       tooltip: {},
       xAxis: {
         type: 'category',
@@ -17,24 +15,24 @@ document.addEventListener('DOMContentLoaded', () => {
         axisLabel: { color: '#fff' }
       },
       series: [{
-        name: 'Monedas',
+        name: 'Coins',
         type: 'bar',
         data: walletChartData.values,
         itemStyle: { color: '#ff00c8' }
       }]
     });
 
-    // Habilitar redimensionamiento
+    // Enable resizing
     window.addEventListener('resize', () => {
       walletChart.resize();
     });
   }
 
-  // PROMEDIO POR LECCIÓN
+  // AVERAGE PER LESSON
   if (typeof promedioLeccionData !== 'undefined' && promedioLeccionData.length > 0) {
     const leccionChart = echarts.init(document.getElementById('promedios-leccion-chart'));
     leccionChart.setOption({
-      title: { text: 'Promedio de Puntaje por Lección', textStyle: { color: '#fff' } },
+      title: { text: 'Average Score per Lesson', textStyle: { color: '#fff' } },
       tooltip: {},
       xAxis: {
         type: 'category',
@@ -46,36 +44,33 @@ document.addEventListener('DOMContentLoaded', () => {
         axisLabel: { color: '#fff' }
       },
       series: [{
-        name: 'Promedio',
+        name: 'Average',
         type: 'bar',
         data: promedioLeccionData.map(item => item.promedio),
         itemStyle: { color: '#00ffc8' }
       }]
     });
 
-    // Habilitar redimensionamiento
+    // Enable resizing
     window.addEventListener('resize', () => {
       leccionChart.resize();
     });
   }
 
-  // Eliminado el bloque duplicado que causaba conflicto con navegación por data-target
-  
-
-  // PREGUNTAS MÁS FALLADAS POR CURSO - DINÁMICO
+  // MOST FAILED QUESTIONS PER COURSE - DYNAMIC
   const courseSelect = document.getElementById('course-select');
   const questionsContainer = document.getElementById('questions-container');
 
-  function limpiarContenedor() {
+  function clearContainer() {
     questionsContainer.innerHTML = '';
   }
 
-  function mostrarPreguntasPorCurso(cursoId) {
-    limpiarContenedor();
+  function showQuestionsByCourse(courseId) {
+    clearContainer();
 
-    const curso = cursosConErrores.find(c => c.id_curso === parseInt(cursoId));
+    const curso = cursosConErrores.find(c => c.id_curso === parseInt(courseId));
     if (!curso || !curso.lecciones.length) {
-      questionsContainer.innerHTML = '<p>Selecciona un Curso</p>';
+      questionsContainer.innerHTML = '<p>Select a Course</p>';
       return;
     }
 
@@ -84,12 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
       leccionDiv.classList.add('leccion-table');
 
       leccionDiv.innerHTML = `
-        <h3>Lección ${leccion.id_leccion}: ${leccion.titulo}</h3>
+        <h3>Lesson ${leccion.id_leccion}: ${leccion.titulo}</h3>
         <table class="questions-table">
           <thead>
             <tr>
-              <th>Pregunta</th>
-              <th>Errores</th>
+              <th>Question</th>
+              <th>Errors</th>
             </tr>
           </thead>
           <tbody>
@@ -111,51 +106,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   courseSelect.addEventListener('change', () => {
     const selectedCourse = courseSelect.value;
-    mostrarPreguntasPorCurso(selectedCourse);
+    showQuestionsByCourse(selectedCourse);
   });
 
-  // USUARIOS - TABLA Y BUSCADOR
-  function mostrarTablaUsuarios(filtro = '') {
+  // USERS - TABLE AND SEARCH
+  function showUserTable(filter = '') {
     const tbody = document.querySelector('#usuarios-table tbody');
     if (!tbody) return;
 
-    const filtroMin = filtro.toLowerCase();
+    const lowerFilter = filter.toLowerCase();
     tbody.innerHTML = '';
 
     usuarios.forEach(u => {
-      const nombreCompleto = `${u.first_name} ${u.last_name}`.toLowerCase();
-      const correo = u.email.toLowerCase();
+      const fullName = `${u.first_name} ${u.last_name}`.toLowerCase();
+      const email = u.email.toLowerCase();
 
       if (
-        nombreCompleto.includes(filtroMin) ||
-        correo.includes(filtroMin)
+        fullName.includes(lowerFilter) ||
+        email.includes(lowerFilter)
       ) {
-        const fechaNac = new Date(u.fecha_nacimiento).toLocaleDateString('en-US');
-;
+        const birthDate = new Date(u.fecha_nacimiento).toLocaleDateString('en-US');
 
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${u.id_usuario}</td>
           <td>${u.first_name} ${u.last_name}</td>
           <td>${u.email}</td>
-          <td>${fechaNac}</td>
-
+          <td>${birthDate}</td>
         `;
         tbody.appendChild(row);
       }
     });
   }
 
-  mostrarTablaUsuarios();
+  showUserTable();
 
   const inputBuscar = document.getElementById('buscar-usuario');
   if (inputBuscar) {
     inputBuscar.addEventListener('input', () => {
-      mostrarTablaUsuarios(inputBuscar.value);
+      showUserTable(inputBuscar.value);
     });
   }
 
-  // Manejo de navegación en el sidebar
+  // Sidebar navigation handling
   const sidebarLinks = document.querySelectorAll('.sidebar a');
   const sections = document.querySelectorAll('.main-section');
 
@@ -163,15 +156,15 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
 
-      // Obtener el valor de data-target
+      // Get data-target value
       const targetId = link.getAttribute('data-target');
 
-      // Ocultar todas las secciones
+      // Hide all sections
       sections.forEach(section => {
         section.style.display = 'none';
       });
 
-      // Mostrar la sección correspondiente
+      // Show the corresponding section
       const targetSection = document.getElementById(targetId);
       if (targetSection) {
         targetSection.style.display = 'block';

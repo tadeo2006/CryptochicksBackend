@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro</title>
-  <link rel="stylesheet" href="/css/login.css"> <!-- Reutilizamos login.css -->
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/css/login.css"> <!-- Reusing login.css -->
   <link rel="icon" type="image/png" href="/images/favicon.ico" >
 </head>
 <body>
-  <!-- Contenedor para la imagen de fondo -->
+  <!-- Background container -->
   <div class="background">
-    <img src="/images/BG.png" alt="Fondo" />
+    <img src="/images/BG.png" alt="Background" />
   </div>
 
   <header class="waybar">
@@ -20,8 +20,8 @@
     <nav class="navbar">
       <div class="menu-toggle" id="menu-toggle">&#9776;</div>
       <div class="nav-buttons" id="nav-buttons">
-        <button onclick="location.href='/'">Inicio</button>
-        <button onclick="location.href='/info'">Sobre el juego</button>
+        <button onclick="location.href='/'">Home</button>
+        <button onclick="location.href='/info'">About the Game</button>
       </div>
     </nav>
   </header>
@@ -29,36 +29,35 @@
   <main class="auth-wrapper">
     <div class="auth-container">
       <div class="auth-tabs">
-        <button id="signup-tab" class="active-tab">Regístrate</button>
+        <button id="signup-tab" class="active-tab">Sign Up</button>
       </div>
 
       <div class="auth-box">
         <form action="/signup" method="POST">
-          <label for="first_name">Nombre:</label>
+          <label for="first_name">First Name:</label>
           <input type="text" id="first_name" name="first_name" required>
 
-          <label for="last_name">Apellido:</label>
+          <label for="last_name">Last Name:</label>
           <input type="text" id="last_name" name="last_name" required>
 
-          <label for="email">Correo Electrónico:</label>
+          <label for="email">Email:</label>
           <input type="email" id="email" name="email" required>
 
-          <label for="password_hash">Contraseña:</label>
+          <label for="password_hash">Password:</label>
           <input type="password" id="password_hash" name="password_hash" required>
 
-          <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+          <label for="fecha_nacimiento">Birth Date:</label>
           <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
 
-          <button type="submit">Registrarse</button>
+          <button type="submit">Register</button>
         </form>
 
-        <!-- Enlace para redirigir al login -->
+        <!-- Link to redirect to login -->
         <div class="register-link">
-          <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a></p>
+          <p>Already have an account? <a href="/login">Log in here</a></p>
         </div>
       </div>
     </div>
   </main>
-
 </body>
 </html>

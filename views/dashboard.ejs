@@ -46,7 +46,7 @@
     <main class="dashboard-container">
       <!-- Topbar -->
       <header class="topbar">
-        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <button class="menu-toggle" onclick="toggleSidebar()" >☰</button>
         <div class="topbar-actions">
           <div class="user-info">
             <span><%= adminName %></span>
@@ -56,65 +56,67 @@
       </header>
 
       <!-- Sección Dashboard -->
-      <section id="dashboard-section" class="main-section">
-        <!-- Gráficas -->
-        <div class="charts">
-          <div class="chart-container">
-            <h2>Monedas Distribuidas por Usuario</h2>
-            <div id="wallet-chart" class="chart"></div>
-          </div>
-          <div class="chart-container">
-            <h2>Promedio de Puntaje por Lección</h2>
-            <div id="promedios-leccion-chart" class="chart"></div>
-          </div>
-        </div>
+      <!-- Sección Dashboard -->
+<section id="dashboard-section" class="main-section">
+  <!-- Gráficas -->
+  <div class="charts">
+    <div class="chart-container">
+      <h2>Coins Distributed per User</h2>
+      <div id="wallet-chart" class="chart"></div>
+    </div>
+    <div class="chart-container">
+      <h2>Average Score per Lesson</h2>
+      <div id="promedios-leccion-chart" class="chart"></div>
+    </div>
+  </div>
 
-        <!-- Preguntas Más Falladas -->
-        <div class="questions-section">
-          <div class="card">
-            <h2>Preguntas Más Falladas</h2>
-            <label for="course-select">Selecciona un Curso:</label>
-            <select id="course-select">
-              <option value="0">Selecciona un curso</option>
-              <option value="1">Curso 1</option>
-              <option value="2">Curso 2</option>
-              <option value="3">Curso 3</option>
-            </select>
-            <div id="questions-container">
-              <!-- Aquí se mostrarán las preguntas dinámicamente -->
-            </div>
-          </div>
-        </div>
-      </section>
+  <!-- Preguntas Más Falladas -->
+  <div class="questions-section">
+    <div class="card">
+      <h2>Most Failed Questions</h2>
+      <label for="course-select">Select a Course:</label>
+      <select id="course-select">
+        <option value="0">Select a course</option>
+        <option value="1">Course 1</option>
+        <option value="2">Course 2</option>
+        <option value="3">Course 3</option>
+      </select>
+      <div id="questions-container">
+        <!-- Questions will be displayed dynamically here -->
+      </div>
+    </div>
+  </div>
+</section>
 
-      <!-- Sección Perfil -->
-      <section id="profile-section" class="main-section" style="display: none;">
-        <h2>Usuarios</h2>
+<!-- Sección Perfil -->
+<section id="profile-section" class="main-section" style="display: none;">
+  <h2>Users</h2>
 
-        <div class="summary-cards">
-          <div class="card">
-            <h2>Total Usuarios</h2>
-            <p><%= totalUsuarios %></p>
-          </div>
-          <div class="card">
-            <h2>Sesiones Activas Hoy</h2>
-            <p><%= sesionesActivas %></p>
-          </div>
-        </div>
+  <div class="summary-cards">
+    <div class="card">
+      <h2>Total Users</h2>
+      <p><%= totalUsuarios %></p>
+    </div>
+    <div class="card">
+      <h2>Active Sessions Today</h2>
+      <p><%= sesionesActivas %></p>
+    </div>
+  </div>
 
-        <div class="usuarios-section">
-          <div class="card">
-            <h2>Lista de Usuarios</h2>
-            <input type="text" id="buscar-usuario" placeholder="Buscar por nombre o email..." />
-            <table id="usuarios-table" class="questions-table">
-              <thead>
-                <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Fecha Nacimiento</th></tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+  <div class="usuarios-section">
+    <div class="card">
+      <h2>User List</h2>
+      <input type="text" id="buscar-usuario" placeholder="Search by name or email..." />
+      <table id="usuarios-table" class="questions-table">
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Email</th><th>Birth Date</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
     </main>
   </div>
 
